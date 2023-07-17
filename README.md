@@ -3,10 +3,10 @@
 # Integrantes del Grupo 18
 
 - *Mónica Inés Cesana Bernasconi*
+- *Emanuel Domingo Montenegro*
 - *Juan Kiel Sodja Bogado*
 - *Rocío Duarte Bazán*
 - *Mario Luis Fretes*
-- *Emanuel Domingo Montenegro*
 - *Hugo Smahlij*
 - *Jorge Alvarez*
 - *Julieta Ramirez*
