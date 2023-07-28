@@ -1,0 +1,10 @@
+.img-main {
+    border-radius: 30px;
+    width: 380px;
+    height: 380px;
+    background-size: cover;
+}
+.img-main:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+}

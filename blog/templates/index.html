@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %}
+    <!-- Primera seccion -->
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <div class="container-fluid d-flex justify-content-center align-items-center row container-main-1 pt-5 mt-4">
+        <div class="col-5 container-fluid d-flex justify-content-center">
+            <img src="{% static 'img/eco-2.jpg' %}" alt="img" class="img-main" />
+        </div>
+        <div class="container-fluid d-flex flex-column justify-content-center align-items-center col-5">
+            <h2>¿Quiénes somos?</h2>
+            <h3>Un blog medioambiental</h3>
+            <p class="texto-main">
+                <b>En EcoFriendly </b> buscamos informar sobre la actualidad de lo que pasa en nuestro planeta🌎<br />
+                Desde el clima , los avances en la enegía, noticias en general y hasta como podes ser mas amigable con la tierra😉<br />
+            </p>
+        </div>
+    </div>
+
+    <div class="container-fluid d-flex justify-content-center align-items-center row pb-5">
+        <div class="container-fluid d-flex flex-column justify-content-center align-items-center col-5">
+            <h2>¡Te damos la bienvenida!</h2>
+            <h3>¿Te animas a ser un eco-amigo?</h3>
+            <p class="texto-main">
+                Te invitamos a que formes parte de EcoFriendly!🙌🏼 
+                Podes registrate y colaborar aportando tus propios articulos para que el resto de la comunidad verde pueda saber un poquito mas sobre el medio ambiente🌿<br>
+                Talvez con tu aporte inspiras a mas gente a ser un aliado del planeta🤜🏼🤛🏻<br/>
+                <b>🌎¡Que comience el viaje!🌎</b>
+            </p>
+        </div>
+        <div class="col-5 container-fluid d-flex justify-content-center">
+            <img src="{% static 'img/eco-1.jpg' %}" alt="img" class="img-main" />
+        </div>
+    </div>
+{% endblock %}
