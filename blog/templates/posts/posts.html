@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div style=" display: flex; justify-content: center; align-items: baseline; margin-top: 50px;" class="container-fluid row">
+    {% for i in posts %}
+        <div class="col-lg-4 col-md-6 mb-4 pb-2">
+            <div class="blog-item" style="width:400px" >
+                <div class="position-relative">
+                    <img class="img-fluid w-100" src="{{i.imagen.url}}" alt="img-art" style="height: 150px;">
+                    <div class="blog-date">
+                    </div>
+                </div>
+                <div class="bg-white p-4">
+                    <div class="d-flex mb-2">
+                        <a class="text-primary text-uppercase text-decoration-none" href="">{{i.titulo}}</a>
+                        <span class="text-primary px-2">|</span>
+                        <a class="text-primary text-uppercase text-decoration-none" href="">
+                            {{i.categoria}}
+                        </a>
+                    </div>
+                    <a class="h5 m-0 text-decoration-none" href="#">
+                        {{i.subtitulo}}
+                    </a>
+                    <br>
+                    <br>
+                    <a href="{% url 'apps.posts:post_individual' i.id %}"> Ver más</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <h1>No hay registros</h1>
+    {% endfor %}   
+</div>
+
+
+{% endblock %}
