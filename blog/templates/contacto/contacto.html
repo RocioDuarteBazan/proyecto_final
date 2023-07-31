@@ -3,8 +3,25 @@
 
 {% block contenido %}
 
-  <center>
-    <form method="POST">
+<center>
+  <div class="col-lg-5 mt-5">
+    <div class="card border-0">
+      <div class="card-header bg-primary text-center p-4">
+        <h1 class="text-white m-0">Contacto:</h1>
+      </div>
+      <div class="card-body rounded-bottom bg-white p-5">
+        <form method="post">
+          <table>
+            {% csrf_token %}
+            {{ form }}
+          </table>
+          <input type="submit" class="btn btn-success" value="Enviar">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- <form method="POST">
       <h1>Formulario de contacto</h1>
       <br>
       {% if messages %}
@@ -12,12 +29,9 @@
           <div class='mesage {{message.tags}}'>{{ message }}</div>
         {% endfor %}
       {% endif %}
-      <table>
-        {% csrf_token %}
-        {{ form }}
-      </table>
-      <input type="submit" value="enviar">
-    </form>
-  </center>
+
+      
+    </form> -->
+</center>
 
 {% endblock %}
