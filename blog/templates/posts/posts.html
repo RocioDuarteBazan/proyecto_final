@@ -2,37 +2,53 @@
 {% load static %}
 
 {% block contenido %}
+    <h2>Mi articulo detallado</h2>
+    {% if user.is_authenticated and articulo.author == user or user.is_staff or user.is_superuser %}
+        <a href="{% url 'posts:editarPost' pk=posts.pk %}">Editar</a>
 
-<div style=" display: flex; justify-content: center; align-items: baseline; margin-top: 50px;" class="container-fluid row">
-    {% for i in posts %}
-        <div class="col-lg-4 col-md-6 mb-4 pb-2">
-            <div class="blog-item" style="width:400px" >
-                <div class="position-relative">
-                    <img class="img-fluid w-100" src="{{i.imagen.url}}" alt="img-art" style="height: 150px;">
-                    <div class="blog-date">
-                    </div>
-                </div>
-                <div class="bg-white p-4">
-                    <div class="d-flex mb-2">
-                        <a class="text-primary text-uppercase text-decoration-none" href="">{{i.titulo}}</a>
-                        <span class="text-primary px-2">|</span>
-                        <a class="text-primary text-uppercase text-decoration-none" href="">
-                            {{i.categoria}}
-                        </a>
-                    </div>
-                    <a class="h5 m-0 text-decoration-none" href="#">
-                        {{i.subtitulo}}
-                    </a>
-                    <br>
-                    <br>
-                    <a href="{% url 'apps.posts:post_individual' i.id %}"> Ver más</a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <h1>No hay registros</h1>
-    {% endfor %}   
-</div>
+        <form method="POST" action="{% url 'posts:posts' pk=posts.pk %}">
+            {% csrf_token %}
+            <button type="submit" name="delete_posts">BORRAR</button>
+        </form>
+    {% endif %}
+    <img src="{{ posts.imagen.url }}" width="20%">
+    <p>TITULO: {{ posts.titulo }}</p>
+    <p>FECHA: {{ posts.fecha_publicacion }}</p>
+    <p>AUTOR: {{ posts.author }}</p>
+    <p>CATEGORIA: {{ posts.categoria_articulo }}</p>
+    <p>CUERPO: {{ posts.contenido }}</p>
+    <br>
 
+    <h3>Comentarios</h3>
+    {% for comment in comments %}
+        <!-- <img src="{{user.imagen.url}}" style="height: 2rem; border-radius: 10%;"></img>}} -->
+        </p>{{ comment.author }}</p>
+        <p>{{ comment.text }}</p>
+        <p>{{ comment.created_at }}</p>
+        <form method="POST" action="{% url 'posts:delete_comment' comment.id %}">
+            {% csrf_token %}
+            {% if comment.author == user.username or user.is_staff or user.is_superuser %}
+                <button type="submit">Borrar comentario</button>
+                <a href="{% url 'posts:edit_comment' comment_id=comment.id %}">Editar comentario</a>
+            {% endif %}
+        </form>
+        <hr>
+    {% empty %}
+        <p>No hay comentarios.</p>
+    {% endfor %}
 
-{% endblock %}
+    {% if user.is_authenticated %}
+        <h3>Añadir Comentario</h3>
+        <form method="POST" action="{% url 'posts:add_comment' posts.pk %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Enviar</button>
+        </form>
+    {% else %}
+        <p>Debe iniciar sesión para añadir un comentario</p>
+        
+    {% endif %}
+
+    <br><br>
+    <a href="{% url 'posts:posts' %}">VOLVER</a>
+{% endblock contenido %}

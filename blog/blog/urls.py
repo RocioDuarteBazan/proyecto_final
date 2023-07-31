@@ -26,9 +26,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('nosotros/', nosotros, name='nosotros'),
-    path('', include('apps.posts.urls')),
+    # path('', include('apps.posts.urls')),
     path('', include('apps.contacto.urls')),
     path('', include('apps.usuarios.urls')),
+    path('posts/', include('apps.posts.urls')),
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
 urlpatterns += staticfiles_urlpatterns() 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

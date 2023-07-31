@@ -1,8 +1,8 @@
-from django.shortcuts import render
-from .models import Post
-from .forms import PostForm
-from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
+from .models import Post, Comment, Categoria
+from .forms import PostForm, CommentForm
+from django.views.generic import ListView, DetailView
+from django.contrib import messages
 
 # Create your views here.
 
@@ -18,53 +18,117 @@ class PostListView(ListView):
     template_name = 'posts/posts.html'
     context_object_name = 'posts'
 
+class Meta:
+        ordering = ('-publicado',) #antigüedad descendente
+        
+        def __str__(self):
+            return self.titulo
+
+class Meta:
+        ordering = ('publicado',) #antingüedad ascendente
+        
+        def __str__(self):
+            return self.titulo
+
+class Meta:
+        ordering = ('-titulo',) #orden alfabético descendente
+        
+        def __str__(self):
+            return self.titulo
+
+class Meta:
+        ordering = ('titulo',) #orden alfabético ascendente
+        
+        def __str__(self):
+            return self.titulo
+
 class PostDetailView(DetailView):
     model = Post
     template_name = 'posts/post_individual.html'
     context_object_name = 'posts'
     pk_url_kwarg = 'id'
     queryset = Post.objects.all()
-    
 
-def EliminarArticulo(request, pk):
-    articulo = get_object_or_404(Post, pk=pk)
+   
+def EliminarPost(request, pk):
+    post = get_object_or_404(Post, pk=pk)
     
     if request.method == 'POST' and 'delete_articulo' in request.POST:
-        articulo.delete()
+        post.delete()
         return render(request, 'posts/posts.html')
 
 
-def AddArticulo(request):
+def AddPost(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES) ##REQUEST FILE PARA LAS IMAGENES
         if form.is_valid():
-            articulo = form.save(commit=False)
+            post = form.save(commit=False)
             # articulo.author = request.user #autor del articulo            
-            articulo.save()
+            post.save()
             return redirect('index')
     else:
         form = PostForm()
     
-    return render(request, 'posts/add.Articulo.html', {'form': form})
+    return render(request, 'posts/addPost.html', {'form': form})
 
 
 
-def EditarArticulo(request, pk):
-    articulo = get_object_or_404(Post, pk=pk)
+def EditarPost(request, pk):
+    posts = get_object_or_404(Post, pk=pk)
 
     # Solo el autor puede editar la noticia
     # if articulo.author != request.user:
     #     return HttpResponseForbidden("No tienes permisos para editar este artículo.")
 
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES, instance=articulo)
+        form = PostForm(request.POST, request.FILES, instance=posts)
         if form.is_valid():
             form.save()
-            return redirect('app.posts:post_individual', pk=pk)
+            return redirect('posts:post_individual', pk=pk)
     else:
-        form = PostForm(instance=articulo)
+        form = PostForm(instance=posts)
 
     context = {
         'form': form,
     }
-    return render(request, 'posts/editarArticulo.html', context)
+    return render(request, 'posts/editarPost.html', context)
+
+
+def add_comment(request, posts_id):
+    posts = get_object_or_404(Comment, id=posts_id)
+    if request.method == 'POST':
+        text = request.POST.get('text')
+        author = request.user
+        # creacion de comentario
+        Comment.objects.create(posts=posts, author=author, text=text)
+    return redirect('posts:posts', pk=posts_id)
+
+
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if comment.author or comment.staff == request.user:
+        comment.delete()
+    return redirect('posts:posts', pk=comment.posts.pk)
+
+
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    #mensaje de error si no sos el autor
+    if comment.author != request.user:
+        messages.error(request, 'Usuario sin permisos para editar este comentario.')
+        return redirect('posts:posts', pk=comment.posts.pk)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('posts:posts', pk=comment.posts.pk)
+    else:
+        form = CommentForm(instance=comment)
+
+    context = {
+        'form': form,
+        'comment': comment,
+    }
+    return render(request, 'posts/editComentario.html', context)
