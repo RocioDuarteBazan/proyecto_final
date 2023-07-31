@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %} Inicio {% endblock title %}
 
 {% block contenido %}
+{% include 'carousel.html' %}
     <!-- Primera seccion -->
     <link href="{% static 'css/index.css' %}" rel="stylesheet">
     <div class="container-fluid d-flex justify-content-center align-items-center row container-main-1 pt-5 mt-4">

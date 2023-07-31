@@ -9,7 +9,7 @@ app_name = 'posts'
 
 urlpatterns = [
     # path('posts/', posts, name='posts'), #En vista por funcion
-    path('',PostListView.as_view(), name='posts'),
+    path('', PostListView.as_view(), name='posts'),
     path('posts/<int:id>/', PostDetailView.as_view(), name='post_individual'),
     path('addPost', views.AddPost, name='addpost'),
     path('posts/<int:pk>/edit/', views.EditarPost, name='editarPost'),
