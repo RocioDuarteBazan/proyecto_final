@@ -9,6 +9,4 @@
 - *Mario Luis Fretes*
 - *Hugo Smahlij*
 - *Jorge Alvarez*
-- *Julieta Ramirez*
-- *Mateo Sabadini*
-- *Matias Aranda*
+
