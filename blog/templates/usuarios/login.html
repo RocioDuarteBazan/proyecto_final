@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block contenido %}
+<div class="container-fluid bg-registration py-5" style="margin: 90px 0;">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-7 mb-5 mb-lg-0 animate__animated animate__bounceInLeft ">
+                <div class="mb-4">
+                    <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">“¡Explora y disfruta!”</h6>
+                    <h1 class="text-white"><span class="text-primary">“¡Únete a nuestra comunidad!”</span> “¡Te damos la bienvenida a nuestro sitio web!”</h1>
+                </div>
+                <p class="text-white">"Cuida el medio ambiente. No hay un planeta B."</p>
+                <ul class="list-inline text-white m-0">
+                    <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>"Cuida el medio ambiente, cuida nuestro futuro."</li>
+                    <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>"Nacimos para cuidar el mundo, no para destruirlo."</li>
+                    <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>" Se parte de la Solucion"</li>
+                </ul>
+            </div>
+            <div class="col-lg-5">
+                <div class="animate__animated animate__bounceInRight card border-0">
+                    <div class="card-header bg-primary text-center p-4">
+                        <h1 class="text-white m-0">Iniciar Sesión</h1>
+                    </div>
+                    <div class="card-body rounded-bottom bg-white p-5">
+                        <form method="POST">
+                            <div class="text-danger">
+                                {% for error in form.non_field_errors %}
+                                {{error}}
+                                {% endfor %}
+                            </div>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="username_id" class="form-label">Nombre de usuario</label>
+                                <input id="username_id" type="text" name="username" class="form-control p-4" placeholder="Nombre de usuario" required="required" value="{% if form.username.value %}{{form.username.value}}{% endif %}">
+                            </div>
+                            <div class="text-danger">
+                                {{form.error.username}}
+                            </div>
+                            <div class="form-group">
+                                <label for="password_id" class="form-label">Contraseña</label>
+                                <input id ="password_id" type="password" name="password" class="form-control p-4" placeholder="Contraseña" required="required">
+                                <div class="text-danger">
+                                    {{form.password.errors}}
+                                </div>
+                            </div>
+                           
+                            <div>
+                                <button class="btn btn-primary btn-block py-3" type="submit">Iniciar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
