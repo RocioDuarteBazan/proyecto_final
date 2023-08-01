@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings 
+from django.urls import reverse
 # Create your models here.
 
 #Categoria:
@@ -30,6 +31,17 @@ class Post(models.Model):
         self.imagen.delete(self.imagen.name)
         super().delete()
         
+    def get_editar_url(self):
+        return reverse('posts:editarPost', args=[self.pk])
+    
+    def get_eliminar_url(self):
+         return reverse('posts:editarPost', args=[self.pk])
+    
+    def get_add_comment_url(self):
+        return reverse('posts:addcomment', args=[self.pk])
+    
+ 
+        
 class Comment(models.Model):
     articulo = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
@@ -38,3 +50,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+    
+    
