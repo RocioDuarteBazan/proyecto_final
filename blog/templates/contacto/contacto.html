@@ -1,23 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block contenido %}
 
-  <center>
-    <form method="POST">
-      <h1>Formulario de contacto</h1>
-      <br>
-      {% if messages %}
-        {% for message in messages %}
-          <div class='mesage {{message.tags}}'>{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-      <table>
-        {% csrf_token %}
-        {{ form }}
-      </table>
-      <input type="submit" value="enviar">
-    </form>
-  </center>
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-5 mt-5">
+    <div class="card border-0">
+      <div class="card-header bg-primary text-center p-4">
+        <h1 class="text-white m-0">Contacto:</h1>
+      </div>
+      <div class="card-body rounded-bottom bg-white p-5">
+        <form method="post">
+          <table>
+            {% csrf_token %}
+            {{ form|crispy }}
+          </table>
+          <input type="submit" class="btn btn-success" value="Enviar">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

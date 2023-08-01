@@ -7,3 +7,5 @@ platformdirs==3.9.1
 sqlparse==0.4.4
 tzdata==2023.3
 virtualenv==20.24.2
+crispy-bootstrap5==0.7
+django-crispy-forms==2.0
