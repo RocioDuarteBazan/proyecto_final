@@ -15,32 +15,10 @@ from django.contrib import messages
 #Vista basada en clases
 class PostListView(ListView):
     model = Post
-    template_name = 'posts/posts.html'
+    template_name = 'posts/post_list.html'
     context_object_name = 'posts'
 
-class Meta:
-        ordering = ('-publicado',) #antigüedad descendente
-        
-        def __str__(self):
-            return self.titulo
 
-class Meta:
-        ordering = ('publicado',) #antingüedad ascendente
-        
-        def __str__(self):
-            return self.titulo
-
-class Meta:
-        ordering = ('-titulo',) #orden alfabético descendente
-        
-        def __str__(self):
-            return self.titulo
-
-class Meta:
-        ordering = ('titulo',) #orden alfabético ascendente
-        
-        def __str__(self):
-            return self.titulo
 
 class PostDetailView(DetailView):
     model = Post

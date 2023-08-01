@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.conf import settings 
+from django.urls import reverse
 # Create your models here.
 
 #Categoria:
@@ -16,9 +17,10 @@ class Post(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     texto = models.TextField(null=False)
     activo = models.BooleanField(default=True)
-    categoria = models.ForeignKey(Categoria,on_delete=models.SET_NULL, null=True, default='Sin categoria')
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, default='Sin categoria')
     imagen = models.ImageField(null=True, blank=True, upload_to='media', default='static/post_default.png')
     publicado = models.DateTimeField(default=timezone.now)
+    autor = models.ForeignKey('usuarios.Usuario', null=True, on_delete=models.SET_NULL)
     
     class Meta:
         ordering = ('-publicado',)
@@ -29,6 +31,20 @@ class Post(models.Model):
     def delete(self, using=None, keep_parents=False):
         self.imagen.delete(self.imagen.name)
         super().delete()
+
+    def get_absolute_url(self):
+        return reverse('posts:post_individual', args=[self.pk])
+        
+    def get_editar_url(self):
+        return reverse('posts:editarPost', args=[self.pk])
+    
+    def get_eliminar_url(self):
+         return reverse('posts:editarPost', args=[self.pk])
+    
+    def get_add_comment_url(self):
+        return reverse('posts:addcomment', args=[self.pk])
+    
+ 
         
 class Comment(models.Model):
     articulo = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
@@ -38,3 +54,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+    
+    
