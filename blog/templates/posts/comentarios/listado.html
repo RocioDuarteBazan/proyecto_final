@@ -1,0 +1,21 @@
+<div class="col">
+    <h3>Comentarios: {{post.comments.all|length}}</h3>
+    {% for comment in post.comments.all %}
+    <!-- <img src="{{user.imagen.url}}" style="height: 2rem; border-radius: 10%;"></img>}} -->
+    <p>{{ comment.author }}</p>
+    <p>{{ comment.text }}</p>
+    <p>{{ comment.created_at }}</p>
+    <form method="POST" action="{% url 'posts:delete_comment' comment.id %}">
+        {% csrf_token %}
+        {% if comment.author == user.username or user.is_staff or user.is_superuser %}
+
+        <button type="submit">Borrar comentario</button>
+        <a href="{% url 'posts:edit_comment' comment_id=comment.id %}">Editar
+            comentario</a>
+        {% endif %}
+    </form>
+    <hr>
+    {% empty %}
+    <p>No hay comentarios.</p>
+    {% endfor %}
+</div>

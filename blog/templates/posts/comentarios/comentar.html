@@ -1,0 +1,26 @@
+<div class="col">
+    {% if user.is_authenticated %}
+    <h3>Añadir Comentario</h3>
+    <form method="POST" action="{{post.get_add_comment_url}}">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form }}
+        </div>
+        <button class="btn btn-primary" type="submit">Enviar</button>
+    </form>
+    {% else %}
+    <p>Debe iniciar sesión para añadir un comentario</p>
+
+    {% endif %}
+
+    <br><br>
+    <a href="{% url 'posts:posts' %}">cancelar</a>
+
+
+    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>{{post.comentarios}}
+    </h6>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" name="delete_posts" class="m-0" style="color: #28a745; border: none;">escribir</button>
+    </form>
+</div>

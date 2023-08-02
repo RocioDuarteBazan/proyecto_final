@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment, Categoria
 from .forms import PostForm, CommentForm
@@ -23,9 +24,14 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'posts/post_individual.html'
-    context_object_name = 'posts'
+    context_object_name = 'post'
     pk_url_kwarg = 'id'
     queryset = Post.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CommentForm()
+        return context
 
    
 def EliminarPost(request, pk):
@@ -72,14 +78,14 @@ def EditarPost(request, pk):
     return render(request, 'posts/editarPost.html', context)
 
 
-def add_comment(request, posts_id):
-    posts = get_object_or_404(Comment, id=posts_id)
+def add_comment(request, articulo_id):
+    post = get_object_or_404(Post, id=articulo_id)
     if request.method == 'POST':
         text = request.POST.get('text')
         author = request.user
         # creacion de comentario
-        Comment.objects.create(posts=posts, author=author, text=text)
-    return redirect('posts:posts', pk=posts_id)
+        Comment.objects.create(articulo=post, author=author, text=text)
+    return redirect('posts:post_individual', id=articulo_id)
 
 
 def delete_comment(request, comment_id):
