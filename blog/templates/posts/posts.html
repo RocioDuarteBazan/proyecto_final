@@ -4,13 +4,21 @@
 {% block contenido %}
     <h2>Mi articulo detallado</h2>
     {% if user.is_authenticated and articulo.author == user or user.is_staff or user.is_superuser %}
-        <a href="{% url 'posts:editarPost' pk=posts.pk %}">Editar</a>
+        <a href="{{posts.get_editar_url}}">Editar</a>
 
-        <form method="POST" action="{% url 'posts:posts' pk=posts.pk %}">
+        <form method="POST" action="{{posts.get_eliminar_url }}"></form>
             {% csrf_token %}
             <button type="submit" name="delete_posts">BORRAR</button>
         </form>
     {% endif %}
+
+    <h2>Ordenar por:</h2>
+    <ul>
+        <a id="boton_post" href="{% url 'posts:posts' %}?orden=reciente">Mas reciente</a>
+        <a id="boton_post" href="{% url 'posts:posts' %}?orden=antiguo">Mas antiguo</a>
+        <a id="boton_post" href="{% url 'posts:posts' %}?orden=alfabetico">Orden alfabetico</a>
+    </ul>
+
     <img src="{{ posts.imagen.url }}" width="20%">
     <p>TITULO: {{ posts.titulo }}</p>
     <p>FECHA: {{ posts.fecha_publicacion }}</p>
@@ -39,7 +47,7 @@
 
     {% if user.is_authenticated %}
         <h3>Añadir Comentario</h3>
-        <form method="POST" action="{% url 'posts:add_comment' posts.pk %}">
+        <form method="POST" action="{{posts.get_add_comment_url}}"></form>
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Enviar</button>
