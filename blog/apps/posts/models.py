@@ -42,7 +42,7 @@ class Post(models.Model):
          return reverse('posts:editarPost', args=[self.pk])
     
     def get_add_comment_url(self):
-        return reverse('posts:addcomment', args=[self.pk])
+        return reverse('posts:add_comment', args=[self.pk])
     
  
         

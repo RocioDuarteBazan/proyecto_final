@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment, Categoria
 from .forms import PostForm, CommentForm
@@ -23,9 +24,14 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'posts/post_individual.html'
-    context_object_name = 'posts'
+    context_object_name = 'post'
     pk_url_kwarg = 'id'
     queryset = Post.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CommentForm()
+        return context
 
    
 def EliminarPost(request, pk):
@@ -72,22 +78,29 @@ def EditarPost(request, pk):
     return render(request, 'posts/editarPost.html', context)
 
 
-def add_comment(request, posts_id):
-    posts = get_object_or_404(Comment, id=posts_id)
+def add_comment(request, articulo_id):
+    post = get_object_or_404(Post, id=articulo_id)
     if request.method == 'POST':
         text = request.POST.get('text')
         author = request.user
         # creacion de comentario
-        Comment.objects.create(posts=posts, author=author, text=text)
-    return redirect('posts:posts', pk=posts_id)
+        Comment.objects.create(articulo=post, author=author, text=text)
+    return redirect('posts:post_individual', id=articulo_id)
 
 
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
-    if comment.author or comment.staff == request.user:
-        comment.delete()
-    return redirect('posts:posts', pk=comment.posts.pk)
 
+    if request.method == "POST":
+        if comment.author == request.user or request.user.is_staff:
+            comment.delete()
+            return redirect('posts:post_individual', id=comment.articulo.pk)
+
+    # Confirmacion
+    ctx = {
+        "comentario": comment
+    }
+    return render(request, 'posts/comentarios/confirmar_eliminar.html', ctx)
 
 def edit_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
@@ -95,13 +108,13 @@ def edit_comment(request, comment_id):
     #mensaje de error si no sos el autor
     if comment.author != request.user:
         messages.error(request, 'Usuario sin permisos para editar este comentario.')
-        return redirect('posts:posts', pk=comment.posts.pk)
+        return redirect('posts:post_individual', id=comment.articulo.pk)
 
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            return redirect('posts:posts', pk=comment.posts.pk)
+            return redirect('posts:post_individual', id=comment.articulo.pk)
     else:
         form = CommentForm(instance=comment)
 
@@ -109,4 +122,4 @@ def edit_comment(request, comment_id):
         'form': form,
         'comment': comment,
     }
-    return render(request, 'posts/editComentario.html', context)
+    return render(request, 'posts/comentarios/editComentario.html', context)
