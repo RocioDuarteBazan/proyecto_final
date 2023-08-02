@@ -12,15 +12,4 @@
     <p>Debe iniciar sesión para añadir un comentario</p>
 
     {% endif %}
-
-    <br><br>
-    <a href="{% url 'posts:posts' %}">cancelar</a>
-
-
-    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>{{post.comentarios}}
-    </h6>
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit" name="delete_posts" class="m-0" style="color: #28a745; border: none;">escribir</button>
-    </form>
 </div>

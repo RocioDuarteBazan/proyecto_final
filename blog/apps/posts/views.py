@@ -90,9 +90,9 @@ def add_comment(request, articulo_id):
 
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
-    if comment.author or comment.staff == request.user:
+    if comment.author == request.user or request.user.is_staff:
         comment.delete()
-    return redirect('posts:posts', pk=comment.posts.pk)
+    return redirect('posts:post_individual', id=comment.articulo.pk)
 
 
 def edit_comment(request, comment_id):
@@ -101,13 +101,13 @@ def edit_comment(request, comment_id):
     #mensaje de error si no sos el autor
     if comment.author != request.user:
         messages.error(request, 'Usuario sin permisos para editar este comentario.')
-        return redirect('posts:posts', pk=comment.posts.pk)
+        return redirect('posts:post_individual', id=comment.articulo.pk)
 
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            return redirect('posts:posts', pk=comment.posts.pk)
+            return redirect('posts:post_individual', id=comment.articulo.pk)
     else:
         form = CommentForm(instance=comment)
 
