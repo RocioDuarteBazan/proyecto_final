@@ -122,4 +122,4 @@ def edit_comment(request, comment_id):
         'form': form,
         'comment': comment,
     }
-    return render(request, 'posts/editComentario.html', context)
+    return render(request, 'posts/comentarios/editComentario.html', context)

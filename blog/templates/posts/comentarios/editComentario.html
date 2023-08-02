@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block contenido %}
+<div class="container-fluid bg-registration py-5" style="margin: 80px 0;">
+    <div class="container py-5">
+        <div class="row align-items-center d-flex justify-content-center">
+
+            <div
+                class="animate__animated animate__bounceInDown card border-0 m-0 p-0  col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                <div class="card-header bg-primary text-center p-4">
+                    <h1 class="text-white m-0">Editar comentario</h1>
+                </div>
+                <div class="p-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="btn btn-primary" type="submit">Guardar</button>
+                        <a  class="btn btn-secondary" href="{{comment.articulo.get_absolute_url}}">cancelar</a>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}
