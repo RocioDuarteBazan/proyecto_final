@@ -90,10 +90,17 @@ def add_comment(request, articulo_id):
 
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
-    if comment.author == request.user or request.user.is_staff:
-        comment.delete()
-    return redirect('posts:post_individual', id=comment.articulo.pk)
 
+    if request.method == "POST":
+        if comment.author == request.user or request.user.is_staff:
+            comment.delete()
+            return redirect('posts:post_individual', id=comment.articulo.pk)
+
+    # Confirmacion
+    ctx = {
+        "comentario": comment
+    }
+    return render(request, 'posts/comentarios/confirmar_eliminar.html', ctx)
 
 def edit_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)

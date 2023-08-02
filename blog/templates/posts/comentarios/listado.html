@@ -4,7 +4,7 @@
     <!-- <img src="{{user.imagen.url}}" style="height: 2rem; border-radius: 10%;"></img>}} -->
     <div class="border-bottom ">
         <p class="lead">{{ comment.text }}</p>
-        <form method="POST" action="{% url 'posts:delete_comment' comment.id %}">
+        <form method="GET" action="{% url 'posts:delete_comment' comment.id %}">
             {% csrf_token %}
             {% if comment.author == user.username or user.is_staff or user.is_superuser %}
             <b>{{ comment.author }}</b> - <span class="text-muted">{{ comment.created_at }}</span> | 
