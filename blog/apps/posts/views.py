@@ -147,3 +147,4 @@ class PostsPorCategoriaView(ListView):
      def get_queryset(self):
           return Post.objects.filter(categoria_id=self.kwargs['pk'])
      
+     
