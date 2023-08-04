@@ -44,9 +44,11 @@ class PostDetailView(DetailView):
 def EliminarPost(request, pk):
     post = get_object_or_404(Post, pk=pk)
     
-    if request.method == 'POST' and 'delete_articulo' in request.POST:
+    if request.method == 'POST':
         post.delete()
-        return render(request, 'posts/posts.html')
+        messages.success(request, "Articulo eliminado")
+        return redirect('posts:posts')
+    return render(request, 'posts/confirmarBorrar.html', {"articulo": post})
 
 
 def AddPost(request):
@@ -56,7 +58,7 @@ def AddPost(request):
             post = form.save(commit=False)
             # articulo.author = request.user #autor del articulo            
             post.save()
-            return redirect('index')
+            return redirect('posts:posts')
     else:
         form = PostForm()
     
@@ -75,7 +77,7 @@ def EditarPost(request, pk):
         form = PostForm(request.POST, request.FILES, instance=posts)
         if form.is_valid():
             form.save()
-            return redirect('posts:post_individual', pk=pk)
+            return redirect('posts:post_individual', id=pk)
     else:
         form = PostForm(instance=posts)
 

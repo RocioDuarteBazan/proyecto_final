@@ -23,18 +23,16 @@
 
                     <div class="p-4">
                         <div class="d-flex justify-content-between mb-3">
-                            <a class="btn btn-secondary" href="{{post.get_editar_url}}">Editar</a>
+                            <div class="btn-group">
+                                <a class="btn btn-secondary" href="{{post.get_editar_url}}">Editar</a>
+                                <a class="btn btn-danger" href="{{post.get_eliminar_url}}">Eliminar</a>
+                            </div>
                             
                             <small class="m-0"><i
                                     class="fa fa-calendar-alt text-primary mr-2"></i>{{post.fecha}}</small>
                         </div>
-                        <div class="my-5">
-                            <em style="font-size: 1.3rem;"><b>{{post.texto}}</b></em>
-                        </div>
                         <div>
-                            <p style="font-size: 1.3rem;">{{post.texto}}</p>
-                            <p style="font-size: 1.3rem;">{{post.texto}}</p>
-                            <p style="font-size: 1.3rem;">{{post.texto}}</p>
+                            <p style="font-size: 1.3rem;">{{post.texto|safe}}</p>
                         </div>
                         <div class="border-top mt-4 pt-4">
                             <div class="d-flex justify-content-between">
