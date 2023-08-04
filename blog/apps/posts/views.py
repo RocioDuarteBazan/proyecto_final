@@ -13,6 +13,10 @@ class PostListView(ListView):
 
     def get_queryset(self):
           queryset = super().get_queryset()
+          categoria_id = self.request.GET.get('categoria_id')
+          if categoria_id and categoria_id.isnumeric():
+              queryset = queryset.filter(categoria__id = categoria_id)
+          
           orden = self.request.GET.get('orden')
           if orden == 'reciente':
                queryset = queryset.order_by('-fecha')
@@ -25,6 +29,9 @@ class PostListView(ListView):
     def get_context_data(self, **kwargs):
           context = super().get_context_data(**kwargs)
           context['orden'] = self.request.GET.get('orden', 'reciente')
+          categoria_id = self.request.GET.get('categoria_id')
+          if categoria_id and categoria_id.isnumeric():
+              context['categoria'] = Categoria.objects.get(pk=self.request.GET.get('categoria_id'))
           return context
 
 
@@ -140,4 +147,12 @@ class PostsPorCategoriaView(ListView):
 
      def get_queryset(self):
           return Post.objects.filter(categoria_id=self.kwargs['pk'])
+     
+
+class CategoriasListView(ListView):
+    model = Post
+    template_name = 'posts/lista_categorias.html'
+    context_object_name = 'posts'
+
+
      

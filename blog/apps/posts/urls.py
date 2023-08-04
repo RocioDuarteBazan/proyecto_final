@@ -18,4 +18,6 @@ urlpatterns = [
     path('comment/add/<int:articulo_id>/', views.add_comment, name='add_comment'),
     path('comment/edit/<int:comment_id>/', views.edit_comment, name='edit_comment'),
     path('categoria/<int:pk>/posts/',PostsPorCategoriaView.as_view(), name='posts_por_categoria'),
+    path('categorias/',views.CategoriasListView.as_view(), name='categorias'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
