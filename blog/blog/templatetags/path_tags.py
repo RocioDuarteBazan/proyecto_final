@@ -5,7 +5,7 @@ register = template.Library()
 
 common_urls = {
     "login": reverse("login"),
-    "register": reverse("register"),
+    "register": reverse("registro"),
     "confirm_logout": reverse("confirm_logout"),
     "index": reverse("index"),
 }

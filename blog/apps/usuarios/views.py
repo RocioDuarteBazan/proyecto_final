@@ -23,15 +23,24 @@ class Registro(CreateView):
         return super().get_success_url()
 
 class Logout(LogoutView):
+    success_url = reverse_lazy("index")
 
     def get_success_url(self):
         messages.success(self.request, 'Cierre de sesión exitoso!')
-        return reverse_lazy('index')
+        
+        success_url = self.success_url
+        next_page = self.request.GET.get("next", "")
+        if next_page:
+            success_url = next_page
+        return success_url
+        
        
 
     
 
 class ConfirmLogout(TemplateView):
     template_name = 'usuarios/confirm_logout.html'
-
-
+    
+    def get_context_data(self):
+        return {"next": self.request.GET.get("next", "")}
+    
