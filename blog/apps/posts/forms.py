@@ -1,5 +1,22 @@
 from django import forms
-from .models import Post, Comment
+from .models import Post, Comment, Categoria
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+
+class CrearPostFrom(forms.ModelForm):
+   class Meta:
+       model = Post
+       fields = '__all__'
+
+class NuevaCategoriaForm(forms.ModelForm):
+    class Meta:
+       model = Categoria
+       fields = '__all__'
+
+
 
 class PostForm(forms.ModelForm):
     
@@ -18,5 +35,4 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['text']
         
-    
     
