@@ -1,4 +1,3 @@
-from pyexpat import model
 from django.db import models
 from django.utils import timezone
 from django.conf import settings 
@@ -21,7 +20,7 @@ class Post(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, default='Sin categoria')
     imagen = models.ImageField(null=True, blank=True, upload_to='media', default='static/post_default.png')
     publicado = models.DateTimeField(default=timezone.now)
-    autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    autor = models.ForeignKey('usuarios.Usuario', null=True, on_delete=models.SET_NULL)
     
     class Meta:
         ordering = ('-publicado',)

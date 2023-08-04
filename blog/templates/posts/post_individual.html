@@ -4,7 +4,7 @@
 {{post.titulo}}
 {% endblock title %}
 {% load crispy_forms_tags %}
-{% load colaborador_tags %}
+
 
 {% block contenido %}
 <div class="container-fluid py-5">
@@ -15,11 +15,6 @@
         </div>
         <div class="row">
             <img class="img-fluid" src="{{ post.imagen.url }}" alt="">
-            {% if user.is_superuser or request.user|has_group:"colaborador" %}
-            <div class="container-fluid" style="margin-top: 300px;">
-                <a id="boton_post" href="{% url 'apps.posts:post_update' pk=posts.id %}">Modificar Post</a>
-            </div>
-            {% endif %}
         </div>
         <div class="row">
             <div class="col mb-4">
