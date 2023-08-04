@@ -9,7 +9,6 @@
                 <div class="messages">
                     {% for message in messages %}
                     <table{% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</table>
-                    <button class="btn btn-primary py-3" type="submit">volver atras</button>
                         {% endfor%}
                 </div>
             </div>

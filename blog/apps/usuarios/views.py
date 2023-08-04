@@ -5,6 +5,7 @@ from .forms import RegistroForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 
+
 class Login(LoginView):
     template_name = "usuarios/login.html"
 

@@ -5,6 +5,7 @@ from .forms import PostForm, CommentForm
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 
+
 # Create your views here.
 
 #Vista basada en funciones
@@ -14,6 +15,9 @@ from django.contrib import messages
 
 
 #Vista basada en clases
+
+
+
 class PostListView(ListView):
     model = Post
     template_name = 'posts/post_list.html'

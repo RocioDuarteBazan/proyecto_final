@@ -9,7 +9,9 @@
         <button class="btn btn-primary" type="submit">Enviar</button>
     </form>
     {% else %}
-    <p>Debe iniciar sesión para añadir un comentario</p>
+    <p>Debe iniciar sesión para añadir un comentario</p> 
+    <a class="btn btn-secondary" href="{% url 'posts:posts' %}">iniciar secion</a> <a class="btn btn-secondary" href="{% url 'posts:posts' %}">resgistrarse</a>
 
-    {% endif %}
+
+    {% endif %} 
 </div>
