@@ -2,8 +2,13 @@ from typing import Any, Dict
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment, Categoria
 from .forms import PostForm, CommentForm
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.contrib import messages
+from django.views.generic import CreateView
+from .forms import ComentarioForm, CrearPostFrom, NuevaCategoriaForm
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
 
@@ -139,6 +144,37 @@ def edit_comment(request, comment_id):
     }
     return render(request, 'posts/comentarios/editComentario.html', context)
 
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = CrearPostFrom
+    template_name = 'posts/crear_post.html'
+    success_url = reverse_lazy('apps.posts:posts')
+
+class CategoriaCreateView(LoginRequiredMixin, CreateView):
+    model = Categoria
+    form_class = NuevaCategoriaForm
+    template_name = 'posts/crear_categoria.html'
+
+    def get_success_url(self):
+        messages.success(self.request, '¡categoria creada con exito!')
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        else:
+            return reverse_lazy('apps.posts:post-create')
+        
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    form_class = CrearPostFrom
+    template_name = 'posts/modificar_post.html'
+    success_url = reverse_lazy('apps.posts.posts')
+
+class PostdeleteView(DeleteView):
+    model = Post
+    template_name ='post/eliminar_post.html'
+    success_url = reverse_lazy('apps.posts:posts')
+
 class PostsPorCategoriaView(ListView):
      model = Post
      template_name = 'posts/posts_por_categoria.html'
@@ -146,4 +182,3 @@ class PostsPorCategoriaView(ListView):
 
      def get_queryset(self):
           return Post.objects.filter(categoria_id=self.kwargs['pk'])
-     

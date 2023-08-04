@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<center>
+{% if user.is_superuser or request.user|has_group:"Colaborador" %}
+<div class="container-fluid" style="margin: 400px;">
+    <h1>Eliminar usuario</h1><br>
+    <p>¿Estás seguro de que quieres eliminar el usuario "{{ object.username }}"?</p><br>
+    <from method="post">
+        {% csrf_token %}
+        <label for="eliminar_comentarios">¿Desea eliminar tambien los comentarios del usuario?</label>
+        <input type="checkbox" name="eliminar_comentarios" id="eliminar_comentarios">
+        <br><br>
+        {% if es_colaborador %}
+            <label for="eliminar_posts">¿Desea eliminar tambien los posts del usuario?</label>
+            <input type="checkbox" name="eliminar_posts" id="eliminar_posts">
+            <br><br>
+        {% endif %}
+
+
+        <input type="submit" value="Sí, eliminar">
+        <a style="color: black;" href="{% url 'apps.usuario:usuario-list' %}">No, canselar</a>
+    </from>
+</div>
+{% else %}
+   <div class="container-fluid" style="margin: 300px;">
+        <h1>Solo usuarios con permiso pueden acceder a esta pagina</h1>
+   </div>
+{% endif %}
+</center>
+{% endblock %}
