@@ -5,7 +5,12 @@
 
 
 {% block contenido %}
-   
+    <h2>Ordenar por:</h2>
+    <ul>
+        <a id="boton_post" href="{% url 'posts:posts' %}?orden=reciente">Mas reciente</a>
+        <a id="boton_post" href="{% url 'posts:posts' %}?orden=antiguo">Mas antiguo</a>
+        <a id="boton_post" href="{% url 'posts:posts' %}?orden=alfabetico">Orden alfabetico</a>
+    </ul>
 
     <div class="container-fluid py-5">
         <div class="container pt-5 pb-3">

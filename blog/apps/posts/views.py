@@ -6,23 +6,26 @@ from django.views.generic import ListView, DetailView
 from django.contrib import messages
 
 
-# Create your views here.
-
-#Vista basada en funciones
-# def posts(request):
-#     posts = Post.objects.all()
-#     return render(request, 'posts.html', {'posts' : posts})
-
-
-#Vista basada en clases
-
-
-
 class PostListView(ListView):
     model = Post
     template_name = 'posts/post_list.html'
     context_object_name = 'posts'
 
+    def get_queryset(self):
+          queryset = super().get_queryset()
+          orden = self.request.GET.get('orden')
+          if orden == 'reciente':
+               queryset = queryset.order_by('-fecha')
+          elif orden == 'antiguo':
+               queryset = queryset.order_by('fecha')
+          elif orden == 'alfabetico':
+               queryset = queryset.order_by('titulo')
+          return queryset
+     
+    def get_context_data(self, **kwargs):
+          context = super().get_context_data(**kwargs)
+          context['orden'] = self.request.GET.get('orden', 'reciente')
+          return context
 
 
 class PostDetailView(DetailView):
@@ -127,3 +130,12 @@ def edit_comment(request, comment_id):
         'comment': comment,
     }
     return render(request, 'posts/comentarios/editComentario.html', context)
+
+class PostsPorCategoriaView(ListView):
+     model = Post
+     template_name = 'posts/posts_por_categoria.html'
+     context_object_name = 'posts'
+
+     def get_queryset(self):
+          return Post.objects.filter(categoria_id=self.kwargs['pk'])
+     
