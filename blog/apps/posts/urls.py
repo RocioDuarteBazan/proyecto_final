@@ -1,6 +1,6 @@
 from django.urls import path
 # from .views import posts
-from .views import PostListView, PostDetailView
+from .views import PostListView, PostDetailView, PostsPorCategoriaView
 from . import views 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -24,4 +24,5 @@ urlpatterns = [
     path('comment/edit/<int:comment_id>/', views.edit_comment, name='edit_comment'),
     path('post/<int:pk>/modificar/', PostUpdateView.as_view(), name='categoria_delete'),
     path('post/<int:pk>/eliminar/', PostdeleteView.as_view(), name='post_delete'),
+    path('categoria/<int:pk>/posts/',PostsPorCategoriaView.as_view(), name='posts_por_categoria'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
