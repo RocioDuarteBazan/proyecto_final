@@ -109,8 +109,8 @@
                                         <a href="{% url 'posts:addpost' %}" class="dropdown-item">Publicar</a>
                                         <a href="{% url 'confirm_logout' %}" class="dropdown-item">Cerrar sesion</a>
                                         {% else %}
-                                        <a href="{% url 'registro' %}" class="dropdown-item">Registrarse</a>
-                                        <a href="{% url 'login' %}" class="dropdown-item">Login</a>
+                                        <a href="{% url 'apps.usuario:registro' %}" class="dropdown-item">Registrarse</a>
+                                        <a href="{% url 'apps.usuario:login' %}" class="dropdown-item">Login</a>
                                         {% endif %}
                                     </div>
                             
