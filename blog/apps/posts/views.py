@@ -10,15 +10,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-# Create your views here.
 
-#Vista basada en funciones
-# def posts(request):
-#     posts = Post.objects.all()
-#     return render(request, 'posts.html', {'posts' : posts})
-
-
-#Vista basada en clases
 class PostListView(ListView):
     model = Post
     template_name = 'posts/post_list.html'
@@ -26,6 +18,10 @@ class PostListView(ListView):
 
     def get_queryset(self):
           queryset = super().get_queryset()
+          categoria_id = self.request.GET.get('categoria_id')
+          if categoria_id and categoria_id.isnumeric():
+              queryset = queryset.filter(categoria__id = categoria_id)
+          
           orden = self.request.GET.get('orden')
           if orden == 'reciente':
                queryset = queryset.order_by('-fecha')
@@ -38,6 +34,9 @@ class PostListView(ListView):
     def get_context_data(self, **kwargs):
           context = super().get_context_data(**kwargs)
           context['orden'] = self.request.GET.get('orden', 'reciente')
+          categoria_id = self.request.GET.get('categoria_id')
+          if categoria_id and categoria_id.isnumeric():
+              context['categoria'] = Categoria.objects.get(pk=self.request.GET.get('categoria_id'))
           return context
 
 
@@ -57,9 +56,11 @@ class PostDetailView(DetailView):
 def EliminarPost(request, pk):
     post = get_object_or_404(Post, pk=pk)
     
-    if request.method == 'POST' and 'delete_articulo' in request.POST:
+    if request.method == 'POST':
         post.delete()
-        return render(request, 'posts/posts.html')
+        messages.success(request, "Articulo eliminado")
+        return redirect('posts:posts')
+    return render(request, 'posts/confirmarBorrar.html', {"articulo": post})
 
 
 def AddPost(request):
@@ -69,7 +70,7 @@ def AddPost(request):
             post = form.save(commit=False)
             # articulo.author = request.user #autor del articulo            
             post.save()
-            return redirect('index')
+            return redirect('posts:posts')
     else:
         form = PostForm()
     
@@ -88,7 +89,7 @@ def EditarPost(request, pk):
         form = PostForm(request.POST, request.FILES, instance=posts)
         if form.is_valid():
             form.save()
-            return redirect('posts:post_individual', pk=pk)
+            return redirect('posts:post_individual', id=pk)
     else:
         form = PostForm(instance=posts)
 
@@ -182,3 +183,12 @@ class PostsPorCategoriaView(ListView):
 
      def get_queryset(self):
           return Post.objects.filter(categoria_id=self.kwargs['pk'])
+     
+
+class CategoriasListView(ListView):
+    model = Post
+    template_name = 'posts/lista_categorias.html'
+    context_object_name = 'posts'
+
+
+     

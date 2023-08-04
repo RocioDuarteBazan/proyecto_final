@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block contenido %}
+
+<div class="container bg-gray-600 py-5">
+    <div class="row">
+        {% for categoria in categorias %}
+        <div class="col-md-4 my-3">
+            <div class="d-flex mb-4 mb-lg-0">
+                <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-primary mr-3"
+                    style="height: 100px; width: 100px;">
+                    <i class="fa fa-2x fa-money-check-alt text-white"></i>
+                </div>
+                <div class="d-flex flex-column">
+                    <h5 class="">{{categoria}}</h5>
+                    <a class="btn btn-secondary" href="{{categoria.get_filterby_url}}">Ver artículos</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+</div>
+
+
+{% endblock contenido %}

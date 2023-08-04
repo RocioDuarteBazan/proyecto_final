@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.posts.models import Post,Comment
  
 
+
 class Login(LoginView):
     template_name = "usuarios/login.html"
 

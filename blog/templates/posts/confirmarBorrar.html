@@ -8,18 +8,19 @@
             
             <div class="animate__animated animate__bounceInDown card border-0 m-0 p-0  col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
                 <div class="card-header bg-primary text-center p-4">
-                    <h1 class="text-white m-0">Cerrar Sesión</h1>
+                    <h1 class="text-white m-0">eliminar</h1>
                 </div>
                 <div class="card-body rounded-bottom bg-white p-5">
-                    <form action="{% url 'logout' %}">
-                        <h3 class="text"><span class="text-primary"></span>¿Estás seguro de que quieres cerrar
-                            sesión? </h3>
-                        <button class="btn btn-primary  type="submit>Confirmar</button>
-                        <a class="btn btn-secondary" href="{% url 'posts:posts' %}">volver atrás</a>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <h3 class="text"><span class="text-primary"></span>¿Estás seguro de que quieres eliminar el Articulo? "{{articulo}}"</h3>
+                        <button class="btn btn-primary" type="submit">Confirmar</button>
+                        <a class="btn btn-secondary" href="{{articulo.get_absolute_url}}">Cancelar</a>
                     </form>
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock contenido %}
+{% endblock contenido %}s

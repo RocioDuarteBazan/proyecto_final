@@ -28,17 +28,24 @@
 
                     <div class="p-4">
                         <div class="d-flex justify-content-between mb-3">
+                            <div class="btn-group">
+                                <a class="btn btn-secondary" href="{{post.get_editar_url}}">Editar</a>
+                                <a class="btn btn-danger" href="{{post.get_eliminar_url}}">Eliminar</a>
+                            </div>
+                            
                             <small class="m-0"><i
                                     class="fa fa-calendar-alt text-primary mr-2"></i>{{post.fecha}}</small>
                         </div>
-                        <a class="h5 text-decoration-none" href="">{{post.texto}}</a>
+                        <div>
+                            <p style="font-size: 1.3rem;">{{post.texto|safe}}</p>
+                        </div>
                         <div class="border-top mt-4 pt-4">
                             <div class="d-flex justify-content-between">
                                 <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>{{post.categoria}}
                                 </h6>
                                 <form method="POST">
                                     {% csrf_token %}
-                                   
+
                                 </form>
                             </div>
                         </div>
@@ -48,6 +55,9 @@
 
                                 {% include 'posts/comentarios/comentar.html'%}
                             </div>
+                            <a class="btn btn-secondary" href="{% url 'posts:posts' %}">volver atrás</a>
+                            <br>
+
                         </div>
                     </div>
                 </div>

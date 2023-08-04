@@ -1,31 +1,46 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Articulos{% endblock title %}
+{% block title %}Articulos{% endblock title %} 
+
 
 {% block contenido %}
-    <h2>Ordenar por:</h2>
-    <ul>
-        <a id="boton_post" href="{% url 'posts:posts' %}?orden=reciente">Mas reciente</a>
-        <a id="boton_post" href="{% url 'posts:posts' %}?orden=antiguo">Mas antiguo</a>
-        <a id="boton_post" href="{% url 'posts:posts' %}?orden=alfabetico">Orden alfabetico</a>
-    </ul>
+   
 
     <div class="container-fluid py-5">
         <div class="container pt-5 pb-3">
             <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Our Blog</h6>
-                <h1>¡Lo más reciente!</h1>
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Filtrar Blog</h6>
+                <h1>
+                    {% if categoria %}
+                    Categoria: "{{categoria}}"
+                    {% else %}
+                    ¡Lo más reciente!
+                    {% endif %}
+                </h1>
             </div>
             <div class="row pb-3">
-                {% for post in posts %}
+                <div class="text-center mb-3 pb-3">
+                    
+                    <di class="col">
+                    
+                            <a id="boton_post" href="{% url 'posts:posts' %}?orden=reciente">Mas reciente</a>
+                            <a id="boton_post" href="{% url 'posts:posts' %}?orden=antiguo">Mas antiguo</a> 
+                            <a id="boton_post" href="{% url 'posts:posts' %}?orden=alfabetico">Orden alfabetico</a> 
+                       
+                    </di>
+                </div>
+                {% for post in posts %} 
                 {% include 'posts/post_card.html' %}
                 {% empty %}
                 <h2>No hay articulos para mostrar</h2>
-                {% endfor %}
+                {% endfor %} 
                 </div>
+
+                
             </div>
         </div>
     </div>
-    
+   
+               
 {% endblock contenido %}
