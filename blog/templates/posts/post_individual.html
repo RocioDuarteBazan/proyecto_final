@@ -4,7 +4,7 @@
 {{post.titulo}}
 {% endblock title %}
 {% load crispy_forms_tags %}
-
+{% load colaborador_tags %}
 
 {% block contenido %}
 <div class="container-fluid py-5">
@@ -23,10 +23,12 @@
 
                     <div class="p-4">
                         <div class="d-flex justify-content-between mb-3">
+                            {% if user.is_staff %}
                             <div class="btn-group">
                                 <a class="btn btn-secondary" href="{{post.get_editar_url}}">Editar</a>
                                 <a class="btn btn-danger" href="{{post.get_eliminar_url}}">Eliminar</a>
                             </div>
+                            {% endif %}
                             
                             <small class="m-0"><i
                                     class="fa fa-calendar-alt text-primary mr-2"></i>{{post.fecha}}</small>

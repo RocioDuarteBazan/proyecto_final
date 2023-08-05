@@ -11,7 +11,7 @@
                     <h1 class="text-white m-0">Cerrar Sesión</h1>
                 </div>
                 <div class="card-body rounded-bottom bg-white p-5">
-                    <form action="{% url 'logout' %}?next={{next}}">
+                    <form action="{% url 'apps.usuario:logout' %}?next={{next}}">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{{next}}">
                         <h3 class="text"><span class="text-primary"></span>¿Estás seguro de que quieres cerrar

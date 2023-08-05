@@ -4,9 +4,9 @@ from django.urls import reverse
 register = template.Library()
 
 common_urls = {
-    "login": reverse("login"),
-    "register": reverse("registro"),
-    "confirm_logout": reverse("confirm_logout"),
+    "login": reverse("apps.usuario:login"),
+    "register": reverse("apps.usuario:registro"),
+    "confirm_logout": reverse("apps.usuario:confirm_logout"),
     "index": reverse("index"),
 }
 
