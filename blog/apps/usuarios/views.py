@@ -20,11 +20,12 @@ class Login(LoginView):
 
 class Registro(CreateView):
     form_class = RegistroForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('apps.usuario:login')
     template_name = 'usuarios/registro.html'
 
     def get_success_url(self) -> str:
         messages.success(self.request, 'Registro exitoso!')
+        print(super().get_success_url())
         return super().get_success_url()
 
 class Logout(LogoutView):
@@ -41,11 +42,11 @@ class ConfirmLogout(TemplateView):
 
 class UsuariolistView(LoginRequiredMixin, ListView):
     model = Usuario
-    template_name = 'usuario7usuario_list.html'
     context_object_name = 'usuarios'
 
     def get_queryset(self):
         queriset = super().get_queryset()
+        print(queriset)
         queriset = queriset.exclude(is_superuser=True)
         return queriset
     
