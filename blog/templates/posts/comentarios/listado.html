@@ -4,16 +4,18 @@
     <!-- <img src="{{user.imagen.url}}" style="height: 2rem; border-radius: 10%;"></img>}} -->
     <div class="border-bottom ">
         <p class="lead">{{ comment.text }}</p>
-        <form method="GET" action="{% url 'posts:delete_comment' comment.id %}">
-            {% csrf_token %}
-            {% if comment.author == user.username or user.is_staff or user.is_superuser %}
-            <b>{{ comment.author }}</b> - <span class="text-muted">{{ comment.created_at }}</span> | 
-            <a class="btn" href="{% url 'posts:edit_comment' comment_id=comment.id %}">
-                <i class="bi bi-pencil-square"></i>
-            </a>
-            <button class="btn text-danger" type="submit"><i class="bi bi-trash3"></i></button>
-            {% endif %}
-        </form>
+        <b>{{ comment.author }}</b> - <span class="text-muted">{{ comment.created_at }}</span>
+        {% if comment.author == user or user.is_staff %}
+        |
+        {% if comment.author == user %}
+        <a class="btn" href="{% url 'posts:edit_comment' comment_id=comment.id %}">
+            <i class="bi bi-pencil-square"></i>
+        </a>
+        {% endif %}
+        <a class="btn text-danger" href="{% url 'posts:delete_comment' comment_id=comment.id %}">
+            <i class="bi bi-trash3"></i>
+        </a>
+        {% endif %}
     </div>
     <hr>
     {% empty %}

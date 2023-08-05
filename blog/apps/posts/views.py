@@ -54,6 +54,10 @@ class PostDetailView(DetailView):
 
    
 def EliminarPost(request, pk):
+    if not request.user.is_staff:
+        messages.error(request, 'No tienes permiso para estar aquí')
+        return redirect('index')
+    
     post = get_object_or_404(Post, pk=pk)
     
     if request.method == 'POST':
@@ -64,10 +68,14 @@ def EliminarPost(request, pk):
 
 
 def AddPost(request):
+    if not request.user.is_staff:
+        messages.error(request, 'No tienes permiso para estar aquí')
+        return redirect('index')
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES) ##REQUEST FILE PARA LAS IMAGENES
         if form.is_valid():
             post = form.save(commit=False)
+            post.autor = request.user
             # articulo.author = request.user #autor del articulo            
             post.save()
             return redirect('posts:posts')
@@ -79,6 +87,10 @@ def AddPost(request):
 
 
 def EditarPost(request, pk):
+    if not request.user.is_staff:
+        messages.error(request, 'No tienes permiso para estar aquí')
+        return redirect('index')
+     
     posts = get_object_or_404(Post, pk=pk)
 
     # Solo el autor puede editar la noticia
@@ -115,7 +127,9 @@ def delete_comment(request, comment_id):
     if request.method == "POST":
         if comment.author == request.user or request.user.is_staff:
             comment.delete()
-            return redirect('posts:post_individual', id=comment.articulo.pk)
+        else:
+            messages.error(request, 'No tienes permiso')
+        return redirect('posts:post_individual', id=comment.articulo.pk)
 
     # Confirmacion
     ctx = {
@@ -162,7 +176,7 @@ class CategoriaCreateView(LoginRequiredMixin, CreateView):
         if next_url:
             return next_url
         else:
-            return reverse_lazy('apps.posts:post-create')
+            return reverse_lazy('posts:categorias')
         
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
