@@ -4,7 +4,7 @@
 
 <head>
     
-    <title>{% block title %} Pagina de inicio {% endblock title%}</title>
+    <title>{% block title %}ECO FRIENDLY{% endblock title%}</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -53,7 +53,7 @@
                         <div class="d-inline-flex align-items-center">
                             <p><i class="fa fa-envelope mr-2"></i>ecofriendly@gmail.com</p>
                             <p class="text-body px-3">|</p>
-                            <p><i class="fa fa-phone-alt mr-2"></i>+054 3644 678999</p>
+                            <p><i class="fa fa-phone-alt mr-2"></i>+54 3644 678999</p>
                         </div>
                     </div>
                     <div class="col-lg-6 text-center text-lg-right">
@@ -103,14 +103,15 @@
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         Ingresar
                                     </a>
+                                    {% load path_tags %}
                                     <div class="dropdown-menu border-0 rounded-0 m-0">
                                         {% if user.is_authenticated %}
                                         <a href="#" class="dropdown-item">Perfil</a>
                                         <a href="{% url 'posts:addpost' %}" class="dropdown-item">Publicar</a>
-                                        <a href="{% url 'apps.usuario:confirm_logout' %}" class="dropdown-item">Cerrar sesion</a>
+                                        <a href="{% confirm_logout_path %}" class="dropdown-item">Cerrar sesion</a>
                                         {% else %}
-                                        <a href="{% url 'apps.usuario:registro' %}" class="dropdown-item">Registrarse</a>
-                                        <a href="{% url 'apps.usuario:login' %}" class="dropdown-item">Login</a>
+                                        <a href="{% register_path %}" class="dropdown-item">Registrarse</a>
+                                        <a href="{% login_path %}" class="dropdown-item">Login</a>
                                         {% endif %}
                                     </div>
                             

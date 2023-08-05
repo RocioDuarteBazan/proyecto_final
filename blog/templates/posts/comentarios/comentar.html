@@ -1,3 +1,4 @@
+{% load path_tags %}
 <div class="col">
     {% if user.is_authenticated %}
     <h3>Comentar</h3>
@@ -10,7 +11,7 @@
     </form>
     {% else %}
     <p>Debe iniciar sesión para añadir un comentario</p> 
-    <a class="btn btn-secondary" href="{% url 'posts:posts' %}">iniciar sesión</a> <a class="btn btn-secondary" href="{% url 'posts:posts' %}">resgistrarse</a>
+    <a class="btn btn-secondary" href="{% login_path %}">iniciar sesión</a> <a class="btn btn-secondary" href="{% register_path %}">resgistrarse</a>
 
 
     {% endif %} 
