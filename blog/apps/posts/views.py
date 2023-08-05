@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment, Categoria
 from .forms import PostForm, CommentForm
@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.views.generic import CreateView
 from .forms import ComentarioForm, CrearPostFrom, NuevaCategoriaForm
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 
@@ -165,7 +165,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'posts/crear_post.html'
     success_url = reverse_lazy('apps.posts:posts')
 
-class CategoriaCreateView(LoginRequiredMixin, CreateView):
+class CategoriaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Categoria
     form_class = NuevaCategoriaForm
     template_name = 'posts/crear_categoria.html'
@@ -177,6 +177,9 @@ class CategoriaCreateView(LoginRequiredMixin, CreateView):
             return next_url
         else:
             return reverse_lazy('posts:categorias')
+    
+    def test_func(self):
+        return self.request.user.is_staff
         
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):

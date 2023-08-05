@@ -4,6 +4,12 @@
 
 <center>
 <div class="container-fluid" style="margin-top: 200px;">
+</form>
+<div class="container-fluid" style="margin-top: 300px;">
+    <a id="boton_post"
+    href="{% url 'posts:categorias' %}">Listar todas las categorias</a>
+</div>
+</div
     <h1>Agregar nueva categoría</h1>
     <form method="post">
         {% csrf_token %}
