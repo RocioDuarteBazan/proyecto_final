@@ -27,5 +27,6 @@ urlpatterns = [
     path('post/<int:pk>/eliminar/', PostdeleteView.as_view(), name='post_delete'),
     path('categoria/<int:pk>/posts/',PostsPorCategoriaView.as_view(), name='posts_por_categoria'),
     path('categorias/',views.CategoriasListView.as_view(), name='categorias'),
+    path('<int:pk>/like', views.like_post, name='like'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

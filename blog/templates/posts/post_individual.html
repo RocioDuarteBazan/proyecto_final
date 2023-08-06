@@ -29,7 +29,7 @@
                                 <a class="btn btn-danger" href="{{post.get_eliminar_url}}">Eliminar</a>
                             </div>
                             {% endif %}
-                            
+
                             <small class="m-0"><i
                                     class="fa fa-calendar-alt text-primary mr-2"></i>{{post.fecha}}</small>
                         </div>
@@ -38,7 +38,17 @@
                         </div>
                         <div class="border-top mt-4 pt-4">
                             <div class="d-flex justify-content-between">
-                                <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>{{post.categoria}}
+                                <h6 class="m-0">
+                                    <form action="{{post.get_like_url}}" class="d-inline" method="POST">
+                                        {% csrf_token %}
+                                        {% if user in post.likes.all %}
+                                        <button class="btn bi bi-heart-fill"
+                                            style="color: red; font-size: 1.5rem;"></button> : {{post.likes.all|length}}
+                                        {% else %}
+                                        <button class="btn bi bi-heart"
+                                            style="color: red; font-size: 1.5rem;"></button> : {{post.likes.all|length}}
+                                        {% endif %}
+                                    </form> | {{post.categoria}}
                                 </h6>
                                 <form method="POST">
                                     {% csrf_token %}

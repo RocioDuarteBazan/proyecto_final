@@ -8,7 +8,7 @@ from django.views.generic import CreateView
 from .forms import ComentarioForm, CrearPostFrom, NuevaCategoriaForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from django.contrib.auth.decorators import login_required
 
 
 class PostListView(ListView):
@@ -208,4 +208,12 @@ class CategoriasListView(ListView):
     context_object_name = 'posts'
 
 
-     
+@login_required
+def like_post(request, pk):
+    if request.method == "POST":
+        post = Post.objects.get(pk=pk)
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+    return redirect('posts:post_individual', pk)
