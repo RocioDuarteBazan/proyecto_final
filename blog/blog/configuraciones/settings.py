@@ -70,6 +70,7 @@ ROOT_URLCONF = 'blog.urls'
 AUTH_USER_MODEL = 'usuarios.Usuario'
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGIN_URL = reverse_lazy('apps.usuario:login')
 
 TEMPLATES = [
     {

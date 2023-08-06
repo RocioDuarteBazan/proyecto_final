@@ -15,6 +15,9 @@ class Categoria(models.Model):
     def get_filterby_url(self):
         return f"{reverse('posts:posts')}?categoria_id={self.pk}"
     
+    def get_eliminar_url(self):
+        return reverse('posts:borrar_categoria', args=[self.pk])
+    
 class Post(models.Model):
     titulo = models.CharField(max_length=50,null=False)
     subtitulo = models.CharField(max_length=100,null =False, blank=True)

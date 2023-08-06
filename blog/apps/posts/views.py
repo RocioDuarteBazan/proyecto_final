@@ -217,3 +217,11 @@ def like_post(request, pk):
         else:
             post.likes.add(request.user)
     return redirect('posts:post_individual', pk)
+
+
+
+
+class CategoriaDeleteView(DeleteView):
+    model = Categoria
+    template_name = 'posts/categoria_confirm_delete.html'
+    success_url = reverse_lazy('posts:categorias')

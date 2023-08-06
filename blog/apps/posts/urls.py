@@ -28,5 +28,6 @@ urlpatterns = [
     path('categoria/<int:pk>/posts/',PostsPorCategoriaView.as_view(), name='posts_por_categoria'),
     path('categorias/',views.CategoriasListView.as_view(), name='categorias'),
     path('<int:pk>/like', views.like_post, name='like'),
+    path('categorias/<int:pk>/eliminar/', views.CategoriaDeleteView.as_view(), name='borrar_categoria'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
