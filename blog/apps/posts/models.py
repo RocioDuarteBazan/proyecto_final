@@ -15,6 +15,9 @@ class Categoria(models.Model):
     def get_filterby_url(self):
         return f"{reverse('posts:posts')}?categoria_id={self.pk}"
     
+    def get_eliminar_url(self):
+        return reverse('posts:borrar_categoria', args=[self.pk])
+    
 class Post(models.Model):
     titulo = models.CharField(max_length=50,null=False)
     subtitulo = models.CharField(max_length=100,null =False, blank=True)
@@ -25,7 +28,8 @@ class Post(models.Model):
     imagen = models.ImageField(null=True, blank=True, upload_to='media', default='static/post_default.png')
     publicado = models.DateTimeField(default=timezone.now)
     autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-    
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='likes_post', blank=True)
+
     class Meta:
         ordering = ('-publicado',)
         
@@ -48,6 +52,8 @@ class Post(models.Model):
     def get_add_comment_url(self):
         return reverse('posts:add_comment', args=[self.pk])
     
+    def get_like_url(self):
+        return reverse('posts:like', args=[self.pk])
  
         
 class Comment(models.Model):

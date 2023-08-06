@@ -107,7 +107,9 @@
                                     <div class="dropdown-menu border-0 rounded-0 m-0">
                                         {% if user.is_authenticated %}
                                         <a href="#" class="dropdown-item">Perfil</a>
+                                        {% if user.is_staff %}
                                         <a href="{% url 'posts:addpost' %}" class="dropdown-item">Publicar</a>
+                                        {% endif %}
                                         <a href="{% confirm_logout_path %}" class="dropdown-item">Cerrar sesion</a>
                                         {% else %}
                                         <a href="{% register_path %}" class="dropdown-item">Registrarse</a>

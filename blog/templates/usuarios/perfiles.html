@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block contenido %}
+
+
+{% for Usuario in usuario % }
+
+ 
+{% endfor %}
+
+
+<h1>{{ user.username }}'s Profile</h1>
+    <p>Email: {{ user.email }}</p>
+
+    {% if user.can_view_info %}
+        <p>This user has permission to view information.</p>
+    {% endif %}
+
+    {% if user.can_edit_profile %}
+        <a href="{% url 'edit_profile' user_id=user.id %}">Edit Profile</a>
+    {% endif %}
+
+{% endblock %}
+
