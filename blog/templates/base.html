@@ -89,7 +89,7 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Categorías</a>
                                 <div class="dropdown-menu border-0 rounded-0 m-0">
-                                    <a href="{% url 'posts:categorias' %}" class="dropdown-item">Todas las categorias</a>
+                                    <a href="{% url 'posts:categorias' %}" class="dropdown-item">Todas las categorías</a>
                                     <hr>
                                     {% for categoria in categorias %}
                                     <a href="{{categoria.get_filterby_url}}" class="dropdown-item">{{categoria.nombre}}</a>
@@ -110,10 +110,10 @@
                                         {% if user.is_staff %}
                                         <a href="{% url 'posts:addpost' %}" class="dropdown-item">Publicar</a>
                                         {% endif %}
-                                        <a href="{% confirm_logout_path %}" class="dropdown-item">Cerrar sesion</a>
+                                        <a href="{% confirm_logout_path %}" class="dropdown-item">Cerrar sesión</a>
                                         {% else %}
                                         <a href="{% register_path %}" class="dropdown-item">Registrarse</a>
-                                        <a href="{% login_path %}" class="dropdown-item">Login</a>
+                                        <a href="{% login_path %}" class="dropdown-item">Iniciar sesión</a>
                                         {% endif %}
                                     </div>
                             
