@@ -66,7 +66,7 @@ def EliminarPost(request, pk):
         return redirect('posts:posts')
     return render(request, 'posts/confirmarBorrar.html', {"articulo": post})
 
-
+@login_required
 def AddPost(request):
     if not request.user.is_staff:
         messages.error(request, 'No tienes permiso para estar aquí')
@@ -159,16 +159,10 @@ def edit_comment(request, comment_id):
     }
     return render(request, 'posts/comentarios/editComentario.html', context)
 
-class PostCreateView(LoginRequiredMixin, CreateView):
-    model = Post
-    form_class = CrearPostFrom
-    template_name = 'posts/crear_post.html'
-    success_url = reverse_lazy('apps.posts:posts')
 
 class CategoriaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Categoria
     form_class = NuevaCategoriaForm
-    template_name = 'posts/crear_categoria.html'
 
     def get_success_url(self):
         messages.success(self.request, '¡categoria creada con exito!')
@@ -181,18 +175,6 @@ class CategoriaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def test_func(self):
         return self.request.user.is_staff
         
-
-class PostUpdateView(LoginRequiredMixin, UpdateView):
-    model = Post
-    form_class = CrearPostFrom
-    template_name = 'posts/modificar_post.html'
-    success_url = reverse_lazy('apps.posts.posts')
-
-class PostdeleteView(DeleteView):
-    model = Post
-    template_name ='post/eliminar_post.html'
-    success_url = reverse_lazy('apps.posts:posts')
-
 class PostsPorCategoriaView(ListView):
      model = Post
      template_name = 'posts/posts_por_categoria.html'
